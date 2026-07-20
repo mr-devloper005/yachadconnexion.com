@@ -1,16 +1,6 @@
 import type { CSSProperties } from 'react'
 import type { TaskKey } from '@/lib/site-config'
 
-/*
-  Yelp-style task surfaces.
-
-  Every task (archive + detail) now shares one cohesive premium identity:
-  clean white surfaces, the signature Yelp red accent, hairline gray borders
-  and a single crisp sans-serif — exactly like Yelp. Per-task copy (kicker /
-  note) still varies so each section keeps a little voice, but the visual
-  language is unified. Tokens are delivered via CSS variables (`--tk-*`).
-*/
-
 export type TaskTheme = {
   /** short flavour word shown as an eyebrow kicker */
   kicker: string
@@ -32,34 +22,34 @@ export type TaskTheme = {
   radius: string
 }
 
-const YELP_FONT = "'Inter', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif"
+const DISPLAY_FONT = "'Funnel Display', system-ui, -apple-system, 'Segoe UI', sans-serif"
+const BODY_FONT = "'Mona Sans', system-ui, -apple-system, 'Segoe UI', sans-serif"
 
-// Shared Yelp palette — every task inherits this; only kicker/note differ.
 const base = {
   dark: false,
-  fontDisplay: YELP_FONT,
-  fontBody: YELP_FONT,
-  bg: '#ffffff',
+  fontDisplay: DISPLAY_FONT,
+  fontBody: BODY_FONT,
+  bg: '#f3f3f3',
   surface: '#ffffff',
-  raised: '#f7f7f7',
-  text: '#1a1a1a',
-  muted: '#6b6b6b',
+  raised: '#fafafa',
+  text: '#111111',
+  muted: '#666666',
   line: '#e6e6e6',
-  accent: '#d32323',
-  accentSoft: '#fdecec',
+  accent: '#e05a4a',
+  accentSoft: '#ffdede',
   onAccent: '#ffffff',
-  glow: 'rgba(211,35,35,0.06)',
-  radius: '0.75rem',
+  glow: 'rgba(224,90,74,0.16)',
+  radius: '0.5rem',
 } satisfies Omit<TaskTheme, 'kicker' | 'note'>
 
 export const taskThemes: Record<TaskKey, TaskTheme> = {
-  article: { ...base, kicker: 'Articles', note: 'In-depth reads, guides and stories worth your time.' },
-  listing: { ...base, kicker: 'Businesses', note: 'Find, compare and connect with local businesses.' },
-  classified: { ...base, kicker: 'Marketplace', note: 'Fresh offers and listings, ready to act on.' },
-  image: { ...base, kicker: 'Photos', note: 'A visual feed of standout images and galleries.' },
-  sbm: { ...base, kicker: 'Bookmarks', note: 'Curated resources and links worth saving.' },
-  pdf: { ...base, kicker: 'Documents', note: 'Downloadable guides, reports and references.' },
-  profile: { ...base, kicker: 'People', note: 'Discover creators, businesses and profiles.' },
+  article: { ...base, kicker: 'Reading Desk', note: 'Long-form posts with calm hierarchy and generous context.' },
+  listing: { ...base, kicker: 'Local Directory', note: 'Compare nearby records with practical contact details and trust cues.' },
+  classified: { ...base, kicker: 'Notice Board', note: 'Short, timely offers arranged for fast scanning.' },
+  image: { ...base, kicker: 'Visual Index', note: 'Image-led entries with a portfolio-style browsing rhythm.' },
+  sbm: { ...base, kicker: 'Resource Shelf', note: 'Curated links and references grouped for easy return visits.' },
+  pdf: { ...base, kicker: 'Reference Library', note: 'Browse useful guides, reports, and downloadable reference material.' },
+  profile: { ...base, kicker: 'Profiles', note: 'People and organizations shown with identity and credibility.' },
 }
 
 export function getTaskTheme(task: TaskKey): TaskTheme {
@@ -81,8 +71,6 @@ export function taskThemeStyle(task: TaskKey): CSSProperties {
     '--tk-on-accent': t.onAccent,
     '--tk-glow': t.glow,
     '--tk-radius': t.radius,
-    // Re-point the shared article-body accent vars so post HTML (headings,
-    // links) inherits this task's accent instead of the global site accent.
     '--slot4-accent': t.accent,
     '--slot4-accent-fill': t.accent,
     '--editable-font-display': t.fontDisplay,
