@@ -15,7 +15,7 @@ export const slot4TaskNotes = {
   classified: "Classified ads pages and detail backlinks",
   sbm: "Social bookmarking pages and detail backlinks",
   profile: "Profile/user pages",
-  pdf: "PDF/document pages and detail backlinks",
-  listing: "Business listing pages and detail backlinks",
+  pdf: "Reference library pages and detail backlinks",
+  listing: "Local directory pages and detail backlinks",
   image: "Image/gallery pages and detail backlinks",
 } satisfies Record<TaskKey, string>;

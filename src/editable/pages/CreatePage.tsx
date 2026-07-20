@@ -31,6 +31,7 @@ const taskIcon: Record<string, typeof FileText> = {
   pdf: FileText,
   sbm: ArrowRight,
 }
+const displayTaskLabel = (key: TaskKey, fallback: string) => key === 'listing' ? 'Local Directory' : key === 'pdf' ? 'Reference Library' : fallback
 
 const fieldClass = 'rounded-2xl border border-[var(--editable-border)] bg-white px-4 py-3 text-sm font-bold text-[var(--editable-page-text,#2f1d16)] outline-none transition placeholder:text-current/35 focus:border-current'
 
@@ -120,7 +121,7 @@ export default function CreatePage() {
                   return (
                     <button key={item.key} type="button" onClick={() => setTask(item.key)} className={`rounded-2xl border p-4 text-left transition ${active ? 'border-current bg-[var(--editable-page-text,#2f1d16)] text-[var(--editable-page-bg,#fff7ee)]' : 'border-[var(--editable-border)] bg-white hover:-translate-y-0.5'}`}>
                       <Icon className="h-5 w-5" />
-                      <span className="mt-3 block text-sm font-black">{item.label}</span>
+                      <span className="mt-3 block text-sm font-black">{displayTaskLabel(item.key, item.label)}</span>
                       <span className="mt-1 block text-xs font-semibold opacity-65">{item.description}</span>
                     </button>
                   )
@@ -131,7 +132,7 @@ export default function CreatePage() {
             <form onSubmit={submit} className="rounded-[2.2rem] border border-[var(--editable-border)] bg-[var(--editable-page-bg,#fff7ee)] p-5 sm:p-7">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="text-xs font-black uppercase tracking-[0.22em] opacity-50">Create {activeTask?.label || 'post'}</p>
+                  <p className="text-xs font-black uppercase tracking-[0.22em] opacity-50">Create {activeTask ? displayTaskLabel(activeTask.key, activeTask.label) : 'entry'}</p>
                   <h2 className="mt-1 text-3xl font-black tracking-[-0.06em]">{pagesContent.create.formTitle}</h2>
                 </div>
                 <span className="rounded-full bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.16em]">{session.name}</span>
