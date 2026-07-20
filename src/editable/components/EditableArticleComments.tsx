@@ -7,19 +7,6 @@ type Comment = { id: string; name: string; comment: string; createdAt: string }
 
 const storageKey = (slug: string) => `editable:article-comments:${slug}`
 
-function timeAgo(value?: string) {
-  if (!value) return ''
-  const then = new Date(value).getTime()
-  if (Number.isNaN(then)) return ''
-  const mins = Math.max(1, Math.floor((Date.now() - then) / 60000))
-  if (mins < 60) return `${mins} min ago`
-  const hours = Math.floor(mins / 60)
-  if (hours < 24) return `${hours} hr ago`
-  const days = Math.floor(hours / 24)
-  if (days < 30) return `${days} ${days === 1 ? 'day' : 'days'} ago`
-  return new Date(then).toLocaleDateString()
-}
-
 function initial(name: string) {
   return (name.trim()[0] || 'G').toUpperCase()
 }
@@ -109,7 +96,6 @@ export function EditableArticleComments({ slug, comments = [] }: { slug: string;
               </span>
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold text-[var(--tk-text)]">{comment.name || 'Guest'}</p>
-                {comment.createdAt ? <p className="text-xs text-[var(--tk-muted)]">{timeAgo(comment.createdAt)}</p> : null}
               </div>
             </div>
             <p className="mt-3 whitespace-pre-line text-sm leading-6 text-[var(--tk-text)]">{comment.comment}</p>
